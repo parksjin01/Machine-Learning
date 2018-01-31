@@ -1,6 +1,6 @@
 import numpy
 
-def gradient_descent(real_y, pred_y, feature, weight):
+def gradient_descent(real_y, pred_y, feature, weight, learning_rate):
 
     real_y = numpy.matrix(real_y, dtype=numpy.float64)
     pred_y = numpy.matrix(pred_y, dtype=numpy.float64)
@@ -12,5 +12,5 @@ def gradient_descent(real_y, pred_y, feature, weight):
     for idx in range(len(real_y)):
         res += (pred_y - real_y) * feature
 
-    weight -= res.transpose()
+    weight -= learning_rate * res.transpose()
     return weight.tolist()

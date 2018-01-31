@@ -14,8 +14,8 @@ for _ in range(100):
     res = hypotheis(feature, weight)
     # print res
     costs.append(cost(output, res))
-    weight = gradient_descent(output, res, feature, weight)
+    weight = gradient_descent(output, res, feature, weight, 0.1)
 
-plot(costs, range(len(costs)))
-show()
 print hypotheis(feature, weight)
+plot(range(len(costs)), costs)
+show()
