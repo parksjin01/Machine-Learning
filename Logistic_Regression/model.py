@@ -1,21 +1,46 @@
+"""
+Class of logistic regression model
+"""
+
 from Logistic_Regression.cost_function import *
 from Logistic_Regression.hypothesis_function import *
 from Logistic_Regression.gradient_descent import *
-from matplotlib.pyplot import *
 
-feature = [[1, 0, 0], [1, 1, 0], [1, 0, 1], [1, 1, 1]]
-output = [0, 0, 0, 1]
+class Logistic_regression():
 
-weight = [[0], [0], [0]]
+    """
+    Purpose:   Object initialization method
+    Parameter: feature, output, # of training iteration, learning rate
+    Return:    None
+    """
+    def __init__(self, x, y, iteration = 100, learning_rate = 0.01):
+        self.x = x
+        self.y = y
+        self.iter = iteration
+        self.learning_rate = learning_rate
+        self.weight = []
 
-costs = []
+        for _ in xrange(len(x[0])):
+            self.weight.append([0])
 
-for _ in range(100):
-    res = hypotheis(feature, weight)
-    # print res
-    costs.append(cost(output, res))
-    weight = gradient_descent(output, res, feature, weight, 0.1)
+    """
+    Purpose:   Training logistic regression model
+    Parameter: None
+    Return:    List of costs
+    """
+    def training(self):
+        costs = []
+        for _ in range(self.iter):                  # Training `iter` times
+            res = hypotheis(self.x, self.weight)
+            costs.append(cost(self.y, res))
+            self.weight = gradient_descent(self.y, res, self.x, self.weight, self.learning_rate)
+            print self.weight
+        return costs
 
-print hypotheis(feature, weight)
-plot(range(len(costs)), costs)
-show()
+    """
+    Purpose:   Calculate logistic regression model's result for given feature
+    Parameter: Feature
+    Return:    Logistic regression model's result for given feature
+    """
+    def forward_propagation(self, x):
+        return hypotheis(x, self.weight)

@@ -1,5 +1,14 @@
+"""
+Cost function for logistic regression
+"""
+
 import numpy
 
+"""
+Purpose:   Calculate cost function for logistic regression
+Parameter: Real output, Result of logistic regression
+Result:    Cost 
+"""
 def cost(real_y, pred_y):
     res = 0
     for idx in range(len(real_y)):

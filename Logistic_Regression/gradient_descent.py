@@ -1,5 +1,14 @@
+"""
+Gradient descent algorithm for logistic regression
+"""
+
 import numpy
 
+"""
+Purpose:   Optimize weight for logistic regression
+Parameter: Real output, Result of logistic regression model, Feature, Weight, Learning rate
+Return:    Optimized weight for logistic regression (Not perfectly optimized)
+"""
 def gradient_descent(real_y, pred_y, feature, weight, learning_rate):
 
     real_y = numpy.matrix(real_y, dtype=numpy.float64)
