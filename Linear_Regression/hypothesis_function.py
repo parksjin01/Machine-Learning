@@ -1,9 +1,16 @@
+"""
+Hypothesis function for linear regression
+"""
+
 import numpy
 
+"""
+Purpose:   Linear regression model's hypothesis function
+Parameter: Feature, Weight
+Return:    Result of hypothesis function
+"""
 def hypotheis(feature, weight):
     feature = numpy.matrix(feature)
     weight = numpy.matrix(weight)
-    # tmp = (feature * weight).tolist()
-    # print type(tmp)
 
     return (feature * weight).tolist()

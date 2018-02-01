@@ -1,5 +1,5 @@
 # Machine-Learning
-###Machine Learning code(via Coursera)
+### Machine Learning code(via Coursera)
 
 >이 깃 저장소는 [코세라]((https://www.coursera.org/learn/machine-learning/home/)) 머신러닝 강의를 보고 강의에 나온 내용을 파이썬2.7 로 구현한 것입니다
  
