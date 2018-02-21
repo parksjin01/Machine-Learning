@@ -52,7 +52,7 @@ class cluster():
         }
 
 # Number of cluster centroid
-NUM_CLUSTER = 10
+NUM_CLUSTER = 2
 
 # Initialize cluster centroid
 init_centroid = random.sample(range(len(height)), NUM_CLUSTER)
