@@ -1,5 +1,6 @@
 # -*- encoding:utf8 -*-
 import sys
+import random
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -13,7 +14,6 @@ class Preprocess():
         with open('Header', 'r') as f:
             head = unicode(f.read()).split(' ')
         header = [head.index(word) for word in header]
-        print header
         for each_file in files:
             is_header = 0
             with open(path+'/'+each_file, 'r') as c:
@@ -35,7 +35,6 @@ class Preprocess():
                         else:
                             self.output.append([0, 0, 0, 1])
                     except:
-                        print tmp_line
                         pass
 
                     line_data = []
@@ -48,12 +47,21 @@ class Preprocess():
                             else:
                                 line_data.append(float(tmp_line[h_idx]))
                         except:
-                            print tmp_line, h_idx
+                            pass
                     if line_data != []:
                         self.feature.append(line_data)
         # for t in zip(self.feature, self.output):
         #     print t
         # print self.feature
-        print len(self.feature), len(self.output)
 
-Preprocess('./data', [u'기온', u'강수량', u'습도'])
+
+    def next_batch(self, batch_size):
+        idx = random.sample(range(len(self.feature)), batch_size)
+        batch_feature = [self.feature[m_idx] for m_idx in idx]
+        batch_output = [self.output[m_idx] for m_idx in idx]
+        return batch_feature, batch_output
+
+
+data = Preprocess('./data', [u'기온', u'강수량', u'습도'])
+print data.next_batch(10)
+print random.sample(range(6), 3)
