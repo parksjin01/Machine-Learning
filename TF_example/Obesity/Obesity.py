@@ -58,7 +58,7 @@ print('Accuracy:', sess.run(accuracy,
                         feed_dict={x: feature,
                                    y: result}))
 
-# exit(0)
+exit(0)
 # For error analyze manually
 for idx in range(len(feature)):
     res = sess.run(is_correct, feed_dict={x: feature[idx], y: result[idx]})

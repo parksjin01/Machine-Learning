@@ -13,6 +13,7 @@ Target = ['"나이"', '"104:키"', '"510:몸무게"', '"518:BMI 평가"']
 with open("Pre_Data.csv", 'rb') as f:
     data = f.read().split('\n')
     head, body = data[0].split(','), data[1:]
+    # Target = head
     tgt_idx = []
 
     # Find the index of item in target list
