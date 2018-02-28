@@ -12,6 +12,7 @@ class Preprocess():
     def __init__(self, path, header):
         self.feature = []
         self.output = []
+        self.idx = 0
         files = os.listdir(path)
         with open('Header', 'r') as f:
             if path == './data/day':
@@ -32,13 +33,13 @@ class Preprocess():
                     try:
                         month = int(tmp_line[1].split('-')[1])
                         if month == 12 or month < 3:
-                            self.output.append([1, 0, 0, 0])
+                            self.output.append([0, 0, 1, ])
                         elif month < 6:
-                            self.output.append([0, 1, 0, 0])
+                            self.output.append([1, 0, 0, ])
                         elif month < 9:
-                            self.output.append([0, 0, 1, 0])
+                            self.output.append([0, 1, 0, ])
                         else:
-                            self.output.append([0, 0, 0, 1])
+                            self.output.append([1, 0, 0, ])
                     except:
                         pass
 
@@ -77,10 +78,15 @@ class Preprocess():
         self.feature = data
         
 
-    def next_batch(self, batch_size):
-        idx = random.sample(range(len(self.feature)), batch_size)
-        batch_feature = [self.feature[m_idx] for m_idx in idx]
-        batch_output = [self.output[m_idx] for m_idx in idx]
+    def next_batch(self, batch_size, randomly):
+        if randomly:
+            idx = random.sample(range(len(self.feature)), batch_size)
+            batch_feature = [self.feature[m_idx] for m_idx in idx]
+            batch_output = [self.output[m_idx] for m_idx in idx]
+        else:
+            batch_feature = self.feature[self.idx:self.idx+batch_size]
+            batch_output = self.output[self.idx:self.idx + batch_size]
+            self.idx += batch_size
         return batch_feature, batch_output
 
     def logarithmatic(self):
