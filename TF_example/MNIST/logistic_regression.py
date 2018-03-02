@@ -15,7 +15,7 @@ W2 = tf.Variable(tf.random_normal([256, 10], stddev=0.01))
 L1 = tf.nn.softmax(tf.matmul(x, W1))
 L2 = tf.nn.softmax(tf.matmul(L1, W2))
 
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=L2, labels = y))
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=L2, labels = y))
 optimizer = tf.train.AdamOptimizer(0.001).minimize(cost)
 
 init = tf.global_variables_initializer()
