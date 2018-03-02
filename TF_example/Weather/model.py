@@ -1,28 +1,17 @@
 # -*- encoding:utf8 -*-
 
 import tensorflow as tf
-import numpy as np
-import json
 import Pre_processing
 
-# Read data from data file
-# data file form is json
-# with open('data', 'rb') as f:
-#     pre_data = json.loads(f.read())
-#     feature = [map(float, tmp) for tmp in pre_data['feature']]
-#     result = [map(int, tmp) for tmp in pre_data['output']]
-
-p = Pre_processing.Preprocess('./data/day', [ u'평균기온', u'일강수량', u'평균상대습도'])
-# p.normalization()
+# Preprocess class is data preprocessing class
+# Parameter: Path of dataset, features we want to use
+p = Pre_processing.Preprocess('./data/day', [ u'평균기온',u'최고기온', u'평균이슬점온도', u'일강수량', u'가조시간', u'평균상대습도', u'평균지면온도'])
+p.normalization() # Normalize data to learning fast
 feature, result = p.next_batch(1, 1)
 
 # Calculate number of input/output layer's automatically
 NUM_Feature = len(feature[0])
 NUM_Result = len(result[0])
-
-# Change 2D list to 2D matrix
-feature = np.matrix(feature)
-result = np.matrix(result)
 
 # Create tensorflow place holder
 x = tf.placeholder(tf.float32, [None, NUM_Feature])
@@ -31,13 +20,14 @@ keep_prob = tf.placeholder(tf.float32)
 
 initializer = tf.contrib.layers.xavier_initializer()
 
-# Create 3 weight variable
+# Create 5 weight variable
 W1 = tf.Variable(initializer([NUM_Feature, 6]))
 W2 = tf.Variable(initializer([6, 6]))
 W3 = tf.Variable(initializer([6, 6]))
 W4 = tf.Variable(initializer([6, 6]))
 W5 = tf.Variable(initializer([6, NUM_Result]))
 
+# Create 5 Bias variable to learning fast and correctly
 B1 = tf.Variable(tf.random_normal([6], stddev=0.01))
 B2 = tf.Variable(tf.random_normal([6], stddev = 0.01))
 B3 = tf.Variable(tf.random_normal([6], stddev = 0.01))
@@ -63,8 +53,8 @@ init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
 
-# Learning 2000 times
-for epoch in range(30):
+# Learning 100 times
+for epoch in range(100):
     total_cost = 0
     for batch_idx in range(len(p.feature)/100):
         feature, result = p.next_batch(100, 0)
@@ -82,7 +72,7 @@ print "\n\n\n\nTraining is finished, Calculate accuracy"
 
 feature, result = p.next_batch(10000, 1)
 
-# Accuracy is approximately 80%
+# Accuracy is approximately 95%
 is_correct = tf.equal(tf.argmax(tf.nn.softmax(output), 1), tf.argmax(y, 1))
 accuracy = tf.reduce_mean(tf.cast(is_correct, tf.float32))
 print('Accuracy:', sess.run(accuracy,

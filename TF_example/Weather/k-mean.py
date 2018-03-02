@@ -23,7 +23,7 @@ Form Height,Weight
 
 height = []
 weight = []
-data = Pre_processing.Preprocess('./data/day', [u'평균기온', u'평균상대습도'])
+data = Pre_processing.Preprocess('./data/day', [u'평균기온', u'평균상대습도', u'평균지면온도'])
 
 for idx in range(len(data.feature)):
     height.append(data.feature[idx][0])
@@ -67,7 +67,7 @@ class cluster():
         }
 
 # Number of cluster centroid
-NUM_CLUSTER = 4
+NUM_CLUSTER = 3
 
 # Initialize cluster centroid
 init_centroid = random.sample(range(len(height)), NUM_CLUSTER)
